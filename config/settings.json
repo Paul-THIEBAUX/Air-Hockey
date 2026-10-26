@@ -1,0 +1,44 @@
+{
+    "projects": {
+        "07621650-6535-35AA-3C4C-72141EA46E71": {
+            "config-debug": {
+                "additionalDependencies": [ 
+                    "cpu-core-debug.lib;cpu-engine-debug.lib;cpu-render-debug.lib"
+                ],
+                "additionalIncludeDirectories": [
+                    "../../lib/cpulib/include"
+                ],
+                "additionalLibraryDirectories": [
+                    "../../lib/cpulib/lib"
+                ],
+                "preprocessorDefinitions": []
+            },
+            "config-release": {
+                "additionalDependencies": [
+                    "cpu-core.lib;cpu-engine.lib;cpu-render.lib"                              
+                ],
+                "additionalIncludeDirectories": [
+                    "../../lib/cpulib/include"
+                ],
+                "additionalLibraryDirectories": [
+                    "../../lib/cpulib/lib"
+                ],
+                "preprocessorDefinitions": []
+            },
+            "dependencies": [],
+            "dependents": [],
+            "name": "Shufflepuck",
+            "property-lib": false,
+            "property-pch": true,
+            "property-vcpkg": false,
+            "property-window": true
+        }
+    },
+    "projects_name_to_guid": {
+        "Shufflepuck": "07621650-6535-35AA-3C4C-72141EA46E71"
+    },
+    "solution_guid": "66430058-169C-4877-2E61-3DE77077068E",
+    "solution_name": "Shufflepuck",
+    "startup_project": "",
+    "version": "2.0"
+}
