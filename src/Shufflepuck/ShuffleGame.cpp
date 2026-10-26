@@ -10,7 +10,10 @@ namespace shuffle
 		void OnExecute(Game& g)
 		{
 			g.m_input.UpdateToggle();
-			g.UpdateAvatar();
+			if (g.m_pFSM->state != CPU_ID(StatePaused))
+			{
+				g.UpdateAvatar();
+			}
 
 			//F8 switch
 			if (BADAPPLE_DEBUG && cpuInput.vi.IsKeyPressed(VK_F8))
@@ -174,6 +177,7 @@ namespace shuffle
 			m_pFSM->Add<StatePaused>("Paused");
 		}
 		SelectAvatar();
+		m_brain->Reset();
 		m_match.Reset();
 		m_serveToPlayer = true;
 		m_lastGoal = Goal::None;
@@ -302,8 +306,8 @@ namespace shuffle
 		XMFLOAT3 IAcolor = CPU_RED;
 		XMFLOAT3 PLAYERcolor = CPU_BLUE;
 
-		m_pHUD->NumberTo5(200, 60, m_match.AIScore(), IAcolor);
-		m_pHUD->NumberTo5(200, 10, m_match.PlayerScore(), PLAYERcolor);
+		HUD::NumberTo5(200, 60, m_match.AIScore(), IAcolor);
+		HUD::NumberTo5(200, 10, m_match.PlayerScore(), PLAYERcolor);
 	}
 
 	void Game::TimerDisplay() {
@@ -318,11 +322,14 @@ namespace shuffle
 		if (dix == 4 || dix == 3)
 			color = { 1.0f, 1.0f, 0.0f };
 
-		m_pHUD->Timer(120, 110, dix, color);
-		m_pHUD->Timer(140, 110, unit, color);
+		HUD::Timer(120, 110, dix, color);
+		HUD::Timer(140, 110, unit, color);
 	}
 
-	void Game::ShowMenu() {
+	void Game::UpdateMenu() {
+		if (!m_pFSM) {
+			return;
+		}
 		if (m_Menu.GetisGameStarted() == false) {
 			m_Menu.Update();
 			m_pFSM->totalTime = 0.0f;
@@ -330,7 +337,12 @@ namespace shuffle
 			m_ai.vel = { 0,0,0 };
 			m_player.vel = { 0,0,0 };
 		}
-		//totalTime
+	}
+
+	void Game::DrawMenu() {
+		if (m_Menu.GetisGameStarted() == false) {
+			m_Menu.Draw();
+		}
 	}
 
 	void Game::DrawInputMode()
@@ -344,25 +356,19 @@ namespace shuffle
 		Winner w = m_match.GetWinner();//bippity boppity your line is now my property
 
 		if (w == Winner::AI) {
-			m_pHUD->LoseScreen();
+			HUD::LoseScreen();
 		}
 		else if (w == Winner::Player) {
-			m_pHUD->VictoryScreen();
+			HUD::VictoryScreen();
 		}
 		else if (w == Winner::Draw) {
-			m_pHUD->DrawScreen();
+			HUD::DrawScreen();
 		}
 		else { 
 			return;
 		}
-	}
-	
 
-	void Game::Stop()
-	{
-		if (m_Menu.GetisGameStarted() == false){
-			ShowMenu();
-		}
+		HUD::FromSentenceToHUD(350, 350, "Press Enter", CPU_WHITE);
 	}
 
 	void Game::SwitchStopStart()
@@ -376,13 +382,11 @@ namespace shuffle
 		if (state == CPU_ID(StatePaused))
 		{
 			m_pFSM->ToState(m_resumeState);
-			m_freeze = false;
 		}
 		else if (state == CPU_ID(StateServe) || state == CPU_ID(StatePlaying))
 		{
 			m_resumeState = state;
 			m_pFSM->ToState(CPU_ID(StatePaused));
-			m_freeze = true;
 		}
 	}
 }

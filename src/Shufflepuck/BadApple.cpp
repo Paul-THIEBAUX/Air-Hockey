@@ -60,6 +60,8 @@ bool BadAppleVideo::Load(const char* path)
 	const unsigned int count = ReadU32(&all[12]);
 	if (width <= 0 || height <= 0 || fps <= 0 || count == 0 || count > 1000000)
 		return false;
+	if ((long long)width * (long long)height > 64LL * 1024LL * 1024LL)
+		return false;
 
 	//Frames, only the payloads are kept
 	std::vector<unsigned char> data;
@@ -118,7 +120,7 @@ bool BadAppleVideo::Decode(int frame, std::vector<unsigned char>& out) const
 				if (shift > 28)
 					return false;
 			}
-			return true;
+			return false;
 		};
 
 	if (m_gray)

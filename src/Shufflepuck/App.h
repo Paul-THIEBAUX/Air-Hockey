@@ -25,8 +25,6 @@ private:
 	inline static App* s_pApp = nullptr;
 	SceneArt* m_pSceneArt = nullptr;
 	Camera* m_pCamera = nullptr;
-	HUD* m_pHUD = nullptr;
-	Menu m_Menu;
 
 	shuffle::Game m_game;
 	float m_pMax = 50.0f;

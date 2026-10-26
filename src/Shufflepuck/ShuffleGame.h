@@ -22,7 +22,8 @@ namespace shuffle
 
 		void Start();
 		void DrawInputMode();   //the bottom left corner, green = controller, grey = mouse
-		void Stop();
+		void UpdateMenu();
+		void DrawMenu();
 		void DrawVictoryMessage();
 		void SwitchStopStart();
 		bool IsControllerMode() const { return m_input.IsController(); }
@@ -31,25 +32,19 @@ namespace shuffle
 
 		void PointDisplay();
 		void TimerDisplay();
-		void ShowMenu();
 		
 		//Read-only data for SceneArt / Camera
 		const Puck& GetPuck()   const { return m_puck; }
 		const Paddle& GetPlayer() const { return m_player; }
 		const Paddle& GetAI()     const { return m_ai; }
 		const Match& GetMatch()  const { return m_match; }
-		std::string   GetStateName() const { return m_pFSM->GetName(); }
+		std::string   GetStateName() const { return m_pFSM ? m_pFSM->GetName() : std::string(); }
 		bool  PuckHidden() const { return m_avatar && m_avatar->ReplacesPuck(); }   //IF the avatar draws its own puck
 		bool  IsSetup() const;
 		Mood  GetAIMood() const;      //Happy when the AI scored / won, Sad when the player did
 		float SetupProgress() const;  // 0..1, drives the intro camera move
 
 	private:
-		//HUD
-		cpu_sprite* m_pSprite;
-		cpu_texture m_textureCompteur;
-		HUD* m_pHUD = nullptr;
-
 		Menu m_Menu;
 
 		//
@@ -66,8 +61,6 @@ namespace shuffle
 		std::unique_ptr<AIAvatar> m_avatars[(int)OpponentId::COUNT];   //one representation per opponent, built when first used
 		AIAvatar* m_avatar = nullptr;                                   //the one of the current opponent
 		OpponentId m_opponent = OpponentId::Normal;
-
-		bool m_freeze = false;
 
 		Puck m_puck;
 		Paddle m_player;

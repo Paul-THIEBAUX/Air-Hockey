@@ -166,11 +166,12 @@ namespace shuffle
 
 		//Goal
 		const float xEnd = TABLE_L * 0.5f;
-		if (puck.pos.x - PUCK_R > xEnd)
+		const float goalHalf = GOAL_W * 0.5f;
+		if (puck.pos.x > xEnd && fabsf(puck.pos.z) < goalHalf)
 		{
 			ev.goal = Goal::AI;
 		}
-		else if (puck.pos.x + PUCK_R < -xEnd)
+		else if (puck.pos.x < -xEnd && fabsf(puck.pos.z) < goalHalf)
 		{
 			ev.goal = Goal::Player;
 		}

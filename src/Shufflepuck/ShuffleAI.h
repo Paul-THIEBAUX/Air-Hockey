@@ -16,6 +16,7 @@ namespace shuffle
 		virtual XMFLOAT3 Think(const Puck& puck, const Paddle& self, float dt);
 		virtual AIAvatar* CreateAvatar() const;   //how this AI looks, puck included (the caller owns it)
 		virtual const char* Name() const { return "Normal"; }
+		virtual void Reset();
 		float SpeedFactor() const { return m_state == State::Strike ? 0.90f : m_speedFactor; }
 
 		//New opponent 
