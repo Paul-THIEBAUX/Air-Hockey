@@ -19,6 +19,18 @@ namespace shuffle
 		return new AvatarRobot();
 	}
 
+	void AI::Reset()
+	{
+		m_state = State::Defend;
+		m_stateTime = 0.0f;
+		m_cooldown = 0.0f;
+		m_timer = 0.0f;
+		m_delay = 0.0f;
+		m_wasComing = false;
+		m_target = { -TABLE_L * 0.25f, TABLE_Y, 0.0f };
+		m_aim = { 0.0f, TABLE_Y, 0.0f };
+	}
+
 	static const float MAX_PUCK_SPEED_TO_ATTACK = 8.0f;
 	static const float ABORT_PUCK_SPEED = 11.0f;
 	static const float APPROACH_TIME_LIMIT = 1.5f;

@@ -69,6 +69,10 @@ void HUD::Alphabet(int x, int y, char letter, DirectX::XMFLOAT3 color) {
 	if (letter == ' ') {
 		HUD_Number(0, 0, 0, 0, 0, 0, 0, x, y, color);
 	}
+	if (letter == '!') {
+		cpuDevice.DrawLine(x + 7, y + 0, 0.0f, x + 7, y + 22, 0.0f, color);
+		cpuDevice.DrawLine(x + 6, y + 29, 0.0f, x + 7, y + 29, 0.0f, color);
+	}
 	if (letter == '.') {
 		cpuDevice.DrawLine(x + 6, y + 30, 0.0f, x + 7, y + 30, 0.0f, color);
 		cpuDevice.DrawLine(x + 7, y + 30, 0.0f, x + 7, y + 29, 0.0f, color);
@@ -241,8 +245,9 @@ void HUD::Alphabet(int x, int y, char letter, DirectX::XMFLOAT3 color) {
 		cpuDevice.DrawLine(x + 15, y + 0, 0.0f, x + 0, y + 30, 0.0f, color);
 	}
 	else if (letter == 'Y' || letter == 'y') {
-		cpuDevice.DrawLine(x + 0, y + 0, 0.0f, (int)x + 15 * 0.5f, y + 15, 0.0f, color);
-		cpuDevice.DrawLine(x + 15, y + 0, 0.0f, x + 0, y + 30, 0.0f, color);
+		cpuDevice.DrawLine(x + 0, y + 0, 0.0f, x + 7, y + 15, 0.0f, color);
+		cpuDevice.DrawLine(x + 15, y + 0, 0.0f, x + 7, y + 15, 0.0f, color);
+		cpuDevice.DrawLine(x + 7, y + 15, 0.0f, x + 7, y + 30, 0.0f, color);
 	}
 	else if (letter == 'Z' || letter == 'z') {
 		cpuDevice.DrawLine(x + 0, y + 0, 0.0f, x + 15, y + 0, 0.0f, color);
@@ -303,9 +308,6 @@ void HUD::Timer(int x, int y, float time, DirectX::XMFLOAT3 color) {
 	}
 	else if (pt == 9) {
 		Alphabet(x, y, '9', color);
-	}
-	else if (pt == 0) {
-		Alphabet(x, y, '0', color);
 	}
 }
 

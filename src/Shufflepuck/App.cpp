@@ -21,14 +21,15 @@ App::~App()
 
 void App::OnStart()
 {
+	cpuInput.MapActionForVI(0, VK_RETURN, VK_SPACE);
+	cpuInput.MapActionForXI(0, CPU_XINPUT_A);
+
 	m_pCamera = new Camera();
 	m_pCamera->Init();
 
 	m_pSceneArt = new SceneArt();
 	m_pSceneArt->createPlateau();
 
-
-	m_Menu.Init();
 	m_game.Start();
 
 #ifdef _DEBUG 
@@ -40,7 +41,7 @@ void App::OnStart()
 
 void App::OnUpdate()
 {
-	
+	m_game.UpdateMenu();
 	m_pCamera->Update();
 	const XMFLOAT3& puck = m_game.GetPuck().pos;
 	const XMFLOAT3& player = m_game.GetPlayer().pos;
@@ -71,15 +72,20 @@ void App::OnExit()
 
 void App::OnRender(int pass)
 {
-	m_game.Stop();
-	m_pHUD->DrawHud();
+	if (pass != CPU_PASS_UI_BEGIN)
+	{
+		return;
+	}
+
+	HUD::DrawHud();
 	m_game.DrawVictoryMessage();
 	m_game.PointDisplay();
 	m_game.TimerDisplay();
 	m_game.DrawInputMode();
+	m_game.DrawMenu();
 
 #ifdef _DEBUG 
-	m_pHUD->HUD_Debug();
+	HUD::HUD_Debug();
 #endif
 }
 

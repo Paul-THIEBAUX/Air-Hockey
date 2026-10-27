@@ -1,0 +1,4 @@
+HUD : suppression des m_pHUD nuls, HUD est maintenant statique (HUD.h), appels corrigés dans App.cpp:80, ShuffleGame.cpp:309, Menu.cpp:31.
+Menu / render : séparation Menu::Update() / Menu::Draw(), logique déplacée dans Game::UpdateMenu(), et dessin uniquement sur CPU_PASS_UI_BEGIN (App.cpp:75, ShuffleGame.cpp:329).
+Entrées / IA : mapping Entrée/Espace/A pour le redémarrage (App.cpp:24), AI::Reset() appelé au Start (ShuffleGame.cpp:180), avatar gelé en pause.
+Divers : caméra debug conflictuelle retirée et cadrage initial corrigé (Camera.cpp:6), but détecté à la ligne (ShufflePhysics.cpp:169), readVarint strict et limite mémoire BadApple, --audio ajouté au script, glyphes ! et Y corrigés, prompt “Press Enter” après le match.

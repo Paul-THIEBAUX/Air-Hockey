@@ -80,6 +80,7 @@ def main():
     ap.add_argument("--fps", type=int, default=30, help="frames per second (default 30)")
     ap.add_argument("--gray", action="store_true", help="16 gray levels (BAD2) instead of black and white (BAD1)")
     ap.add_argument("--threshold", type=int, default=128, help="black / white threshold for BAD1 (default 128)")
+    ap.add_argument("--audio", default=None, help="optional audio output file (for example badapple.wav)")
     args = ap.parse_args()
 
     try:
